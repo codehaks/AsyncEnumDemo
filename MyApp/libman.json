@@ -13,6 +13,10 @@
     {
       "library": "vue@2.5.17",
       "destination": "wwwroot/lib/vue/"
+    },
+    {
+      "library": "Chart.js@2.8.0",
+      "destination": "wwwroot/lib/Chart.js/"
     }
   ]
 }
