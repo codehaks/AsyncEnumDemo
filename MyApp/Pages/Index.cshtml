@@ -1,0 +1,14 @@
+﻿@page
+@model MyApp.Pages.IndexModel
+@{
+    ViewData["Title"] = "Home";
+}
+
+<h2>MyApp</h2>
+<hr />
+
+<form asp-controller="Data" asp-action="upload" enctype="multipart/form-data" method="post">
+    <input type="file" class="form-control-file" name="file" />
+    <button class="btn btn-primary">Submit</button>
+</form>
+
