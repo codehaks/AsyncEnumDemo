@@ -30,7 +30,6 @@ namespace MyApp.Controllers
                 var data = line;
             }
 
-            //await ReadTextFile(file, _env);
             return Ok("Done");
         }
 
