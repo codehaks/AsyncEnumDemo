@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using MyApp.Data;
+using MyApp.Hubs;
 
 namespace MyApp
 {
@@ -19,6 +20,8 @@ namespace MyApp
             services.AddRazorPages()
                 .AddRazorRuntimeCompilation();
 
+            services.AddSignalR();
+
         }
 
 
@@ -33,6 +36,8 @@ namespace MyApp
 
             app.UseEndpoints(endpoints =>
             {
+                endpoints.MapHub<ChartHub>("/charthub");
+
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");

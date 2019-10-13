@@ -12,3 +12,90 @@
     <button class="btn btn-primary">Submit</button>
 </form>
 
+<hr />
+
+<div id="app">
+    <canvas id="myChart" width="1200" height="400"></canvas>
+</div>
+
+@section scripts{
+    <script src="~/lib/microsoft/signalr/dist/browser/signalr.js"></script>
+    <script src="~/lib/Chart.js/Chart.js"></script>
+
+    <script>
+
+        var app = new Vue({
+            el: "#app",
+            data: {
+                days: [],
+                prices: [],
+                chart: null
+            },
+            created: function myfunction() {
+                var vm = this;
+
+           
+
+            },
+            mounted: function () {
+                var vm = this;
+
+                     var ctx = $("#myChart");
+                vm.chart = new Chart(ctx, {
+                    type: 'line',
+                    data: {
+                        labels: [1,2],
+                        datasets: [{
+                            label: 'Bitcoin History',
+                            data: [10,15],
+                            backgroundColor: [
+                                'rgba(255, 99, 132, 0.2)'
+
+                            ],
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        scales: {
+                            yAxes: [{
+                                ticks: {
+                                    beginAtZero: true
+                                }
+                            }]
+                        }
+                    }
+                });
+
+                vm.connection = new signalR.HubConnectionBuilder()
+                    .withUrl('/chartHub')
+                    .configureLogging(signalR.LogLevel.Information)
+                    .build();
+
+                vm.connection.start()
+                    .catch(function (err) {
+                        return console.error(err.toSting());
+                    });
+
+                vm.connection.on('sendBitcoinData', function (date, price) {
+
+                    console.log(price);
+
+                    //vm.days.push(date);
+                    //vm.prices.push(price);
+
+                    vm.chart.data.labels.push(date);
+
+                    vm.chart.data.datasets.forEach((dataset) => {
+                        dataset.data.push(price);
+                    });
+                    vm.chart.update();
+
+                });
+            }
+
+        });
+
+    </script>
+
+}
+
