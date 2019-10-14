@@ -18,6 +18,10 @@ namespace MyApp.Controllers
             _env = env;
         }
 
+        [HttpPost]
+        [RequestSizeLimit(int.MaxValue)]
+        [RequestFormLimits(ValueLengthLimit = int.MaxValue, MultipartBodyLengthLimit = int.MaxValue)]
+
         public async Task<IActionResult> Upload(IFormFile file)
         {
             var counter = 1;
