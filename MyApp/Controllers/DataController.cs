@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -28,15 +29,19 @@ namespace MyApp.Controllers
         {
             return Ok("ok");
         }
-        public async Task<IActionResult> Upload(IFormFile file)
+        public async Task<IActionResult> Upload(IFormFile file, CancellationToken cancellationToken)
         {
             await foreach (var line in ReadTextFile(file, _env))
             {
+                if (cancellationToken.IsCancellationRequested)
+                {
+                    break;
+                }
                 var data = line.Split(',');
                 var date = data[0];
                 var price = Convert.ToDouble(data[1]);
                 await _chartHub.Clients.All.SendBitcoinData(date, price);
-                await Task.Delay(1000);
+                await Task.Delay(2);
             }
 
             return Ok("Done");
