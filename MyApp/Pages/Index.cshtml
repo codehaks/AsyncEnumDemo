@@ -43,7 +43,7 @@
                         processData: false,
                         type: 'POST',
                         success: function (data, textStatus, jqXHR) {
-                            alert("done!");
+                            // todo
                         }
                     });
 
@@ -57,10 +57,10 @@
                 vm.chart = new Chart(ctx, {
                     type: 'line',
                     data: {
-                        //labels: [1, 2,3,4,5],
+                        //labels: [],
                         datasets: [{
                             label: 'Bitcoin Price History',
-                            // data: [5,10,15,5,7],
+                            // data: [],
                             backgroundColor: [
                                 'rgba(255, 99, 132, 0.2)'
 
@@ -100,17 +100,12 @@
 
                 vm.connection.on('sendBitcoinData', function (date, price) {
 
-                    //console.log(price);
-
-                    //vm.days.push(date);
-                    //vm.prices.push(price);
-
-                    //vm.chart.data.label(date);
 
                     vm.chart.data.labels.push(" ");
 
                     vm.chart.data.datasets.forEach((dataset) => {
                         dataset.data.push(price);
+            
                     });
                     vm.chart.update();
 
