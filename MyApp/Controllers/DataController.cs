@@ -18,19 +18,23 @@ namespace MyApp.Controllers
             _env = env;
         }
 
-   
-        public IActionResult Index()
-        {
-            return Ok("ok");
-        }
         public async Task<IActionResult> Upload(IFormFile file)
         {
+            var counter = 1;
+
             await foreach (var line in ReadTextFile(file, _env))
             {
-                var data = line;
+                if (line.Trim()!="hosein")
+                {
+                    counter++;
+                }
+                else
+                {
+                    break;
+                }
             }
 
-            return Ok("Done");
+            return Ok($"hosein found at line {counter}");
         }
 
         private async IAsyncEnumerable<string> ReadTextFile(IFormFile file, IWebHostEnvironment env)

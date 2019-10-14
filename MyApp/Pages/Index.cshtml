@@ -4,11 +4,15 @@
     ViewData["Title"] = "Home";
 }
 
-<h2>MyApp</h2>
+<h2>IAsyncEnumerable@("<T>") Demo</h2>
 <hr />
 
-<form asp-controller="Data" asp-action="upload" enctype="multipart/form-data" method="post">
+<form asp-controller="Data" asp-action="upload" 
+      enctype="multipart/form-data" method="post">
+
     <input type="file" class="form-control-file" name="file" />
+
     <button class="btn btn-primary">Submit</button>
+
 </form>
 
