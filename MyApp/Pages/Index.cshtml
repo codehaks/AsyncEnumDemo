@@ -7,14 +7,13 @@
 <h2>MyApp</h2>
 <hr />
 
-<form asp-controller="Data" asp-action="upload" enctype="multipart/form-data" method="post">
-    <input type="file" class="form-control-file" name="file" />
-    <button class="btn btn-primary">Submit</button>
-</form>
-
-<hr />
-
 <div id="app">
+
+    <form id="uploadForm" v-on:submit.prevent="uploadFile" enctype="multipart/form-data" method="post">
+        <input type="file" class="form-control-file" name="file" />
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+    <hr />
     <canvas id="myChart" width="1200" height="400"></canvas>
 </div>
 
@@ -31,23 +30,37 @@
                 prices: [],
                 chart: null
             },
-            created: function myfunction() {
-                var vm = this;
+            methods: {
+                uploadFile: function () {
+                    var form = document.getElementById('uploadForm');
+                    var formData = new FormData(form);
 
-           
+                    $.ajax({
+                        url: '/data/upload',
+                        data: formData ? formData : form.serialize(),
+                        cache: false,
+                        contentType: false,
+                        processData: false,
+                        type: 'POST',
+                        success: function (data, textStatus, jqXHR) {
+                            alert("done!");
+                        }
+                    });
 
+
+                }
             },
             mounted: function () {
                 var vm = this;
 
-                     var ctx = $("#myChart");
+                var ctx = $("#myChart");
                 vm.chart = new Chart(ctx, {
                     type: 'line',
                     data: {
-                        labels: [1,2],
+                        labels: [1, 2],
                         datasets: [{
-                            label: 'Bitcoin History',
-                            data: [10,15],
+                            label: 'Bitcoin Price History',
+                            data: [10, 15],
                             backgroundColor: [
                                 'rgba(255, 99, 132, 0.2)'
 
