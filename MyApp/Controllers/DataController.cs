@@ -31,7 +31,7 @@ namespace MyApp.Controllers
         }
         public async Task<IActionResult> Upload(IFormFile file)
         {
-            await foreach (var line in ReadTextFile(file))
+            await foreach (var line in ReadLines(file))
             {           
                 var data = line.Split(',');
                 var date = data[0];
@@ -43,7 +43,7 @@ namespace MyApp.Controllers
             return Ok("Done");
         }
 
-        private async IAsyncEnumerable<string> ReadTextFile(IFormFile file)
+        private async IAsyncEnumerable<string> ReadLines(IFormFile file)
         {
             using StreamReader reader = new StreamReader(file.OpenReadStream());
 
