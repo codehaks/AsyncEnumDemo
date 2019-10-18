@@ -29,14 +29,10 @@ namespace MyApp.Controllers
         {
             return Ok("ok");
         }
-        public async Task<IActionResult> Upload(IFormFile file, CancellationToken cancellationToken)
+        public async Task<IActionResult> Upload(IFormFile file)
         {
             await foreach (var line in ReadTextFile(file))
-            {
-                if (cancellationToken.IsCancellationRequested)
-                {
-                    break;
-                }
+            {           
                 var data = line.Split(',');
                 var date = data[0];
                 var price = Convert.ToDouble(data[1]);
