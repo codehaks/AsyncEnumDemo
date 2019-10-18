@@ -31,7 +31,7 @@ namespace MyApp.Controllers
         }
         public async Task<IActionResult> Upload(IFormFile file, CancellationToken cancellationToken)
         {
-            await foreach (var line in ReadTextFile(file, _env))
+            await foreach (var line in ReadTextFile(file))
             {
                 if (cancellationToken.IsCancellationRequested)
                 {
@@ -47,7 +47,7 @@ namespace MyApp.Controllers
             return Ok("Done");
         }
 
-        private async IAsyncEnumerable<string> ReadTextFile(IFormFile file, IWebHostEnvironment env)
+        private async IAsyncEnumerable<string> ReadTextFile(IFormFile file)
         {
             using StreamReader reader = new StreamReader(file.OpenReadStream());
 
