@@ -21,14 +21,13 @@ namespace MyApp.Controllers
         [HttpPost]
         [RequestSizeLimit(int.MaxValue)]
         [RequestFormLimits(ValueLengthLimit = int.MaxValue, MultipartBodyLengthLimit = int.MaxValue)]
-
         public async Task<IActionResult> Upload(IFormFile file)
         {
             var counter = 1;
 
-            await foreach (var line in ReadTextFile(file, _env))
+            await foreach (var line in ReadTextFile(file))
             {
-                if (line.Trim()!="hosein")
+                if (line.Trim()!="hakim")
                 {
                     counter++;
                 }
@@ -38,10 +37,10 @@ namespace MyApp.Controllers
                 }
             }
 
-            return Ok($"hosein found at line {counter}");
+            return Ok($"hakim found at line {counter}");
         }
 
-        private async IAsyncEnumerable<string> ReadTextFile(IFormFile file, IWebHostEnvironment env)
+        private async IAsyncEnumerable<string> ReadTextFile(IFormFile file)
         {
             using StreamReader reader = new StreamReader(file.OpenReadStream());
       
