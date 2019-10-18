@@ -25,7 +25,7 @@ namespace MyApp.Controllers
         {
             var counter = 1;
 
-            await foreach (var line in ReadTextFile(file))
+            await foreach (var line in ReadLine(file))
             {
                 if (line.Trim()!="hakim")
                 {
@@ -40,7 +40,7 @@ namespace MyApp.Controllers
             return Ok($"hakim found at line {counter}");
         }
 
-        private async IAsyncEnumerable<string> ReadTextFile(IFormFile file)
+        private async IAsyncEnumerable<string> ReadLine(IFormFile file)
         {
             using StreamReader reader = new StreamReader(file.OpenReadStream());
       
